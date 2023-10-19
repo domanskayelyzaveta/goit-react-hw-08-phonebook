@@ -1,1 +1,0 @@
-{"version":3,"file":"static/css/433.c647d4fa.chunk.css","mappings":"AAAA,uCACI,iBACJ,CAGA,6BACI,iBACJ","sources":["pages/register.module.css"],"sourcesContent":[".registerFormContainer{\n    padding-left: 40px;\n}\n\n\n.myFormInput{\n    margin-right: 10px;\n}"],"names":[],"sourceRoot":""}
