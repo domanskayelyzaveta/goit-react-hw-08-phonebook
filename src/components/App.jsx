@@ -1,76 +1,42 @@
-import { ContactsForm } from './ContactsForm/ContactsForm';
-import { Filter } from './Filter/Filter';
-import { ContactList } from './ContactList/ContactList';
-import { nanoid } from 'nanoid';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+// import './App.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { onFilterChange } from './redux/phoneBookReducer';
-import { useEffect } from 'react';
-import {
-  requestAddContactThunk,
-  requestDeleteContactThunk,
-  requestPhoneBookThunk,
-} from './redux/thunks';
-import {
-  selectContacts,
-  selectFilter,
-  selectIsLoading,
-} from './redux/selectors';
-import Loader from './Loader/Loader';
+import { lazy, useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import Layout from './Layout/Layout';
+import NotFoundPage from 'pages/NotFoundPage';
+import { selectUserData } from 'redux/selectors';
+import { currentUserThunk } from 'redux/thunks';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
+import PublicRoute from './PublicRoute/PublicRoute';
+
+const Contacts = lazy(() => import('pages/Contacts'));
+const Login = lazy(() => import('pages/Login'));
+const Register = lazy(() => import('pages/Register'));
 
 export function App() {
-  const contacts = useSelector(selectContacts);
-  const filter = useSelector(selectFilter);
-  const isLoading = useSelector(selectIsLoading);
-
+  const userData = useSelector(selectUserData);
+  console.log(userData);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(requestPhoneBookThunk());
+    dispatch(currentUserThunk());
   }, [dispatch]);
 
-  const onFilter = event => {
-    const inputValue = event.target.value;
-    dispatch(onFilterChange(inputValue));
-  };
-
-  const onDelete = id => {
-    dispatch(requestDeleteContactThunk(id));
-  };
-
-  const handleFormSubmit = ({ name, phone }) => {
-    const hasDuplicateContacts = contacts.some(
-      contact => contact.name === name && contact.phone === phone
-    );
-    if (hasDuplicateContacts) {
-      alert(`"${name}" is already in contacts!`);
-      return;
-    }
-    dispatch(requestAddContactThunk({ name, phone, id: nanoid() }));
-  };
-
-  const filteredContactsByName = contacts.filter(contact => {
-    return (
-      contact.name.toLowerCase().includes(filter.trim().toLowerCase()) ||
-      contact.phone.includes(filter)
-    );
-  });
-
   return (
-    <div className="container">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <div>
-          <ContactsForm onSubmit={handleFormSubmit} />
-          <Filter label="Name" type="text" onChange={onFilter} />
-          <ContactList
-            contacts={filteredContactsByName}
-            onDeleteContact={onDelete}
-          />
-        </div>
-      )}
+    <div>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<PublicRoute />}>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </Route>
+          <Route path="/" element={<PrivateRoute />}>
+            <Route path="/contacts" element={<Contacts />} />
+          </Route>
+          <Route path="/" element={<Navigate to={'/contacts'} />} />
+        </Route>
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
     </div>
   );
 }

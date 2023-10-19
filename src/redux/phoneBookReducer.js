@@ -7,8 +7,8 @@ import {
 
 const initialState = {
   contacts: [],
+  isLoading: true,
   filter: '',
-  isLoading: false,
   error: null,
 };
 
@@ -22,7 +22,10 @@ const phoneBookSlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(requestPhoneBookThunk.pending, (state, action) => {
+
+      //------------ Get All Contacts -------------------
+
+      .addCase(requestPhoneBookThunk.pending, state => {
         state.isLoading = true;
         state.error = null;
       })
@@ -34,7 +37,10 @@ const phoneBookSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(requestAddContactThunk.pending, (state, action) => {
+
+      //--------------- Add New Contact -------------------
+
+      .addCase(requestAddContactThunk.pending, state => {
         state.isLoading = true;
       })
       .addCase(requestAddContactThunk.fulfilled, (state, action) => {
@@ -45,7 +51,10 @@ const phoneBookSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       })
-      .addCase(requestDeleteContactThunk.pending, (state, action) => {
+
+      //-------------- Delete Contact -------------------
+
+      .addCase(requestDeleteContactThunk.pending, state => {
         state.isLoading = true;
         state.error = null;
       })
@@ -59,7 +68,7 @@ const phoneBookSlice = createSlice({
         state.isLoading = false;
         state.error = action.payload;
       });
-  }, //підписка на конкретний статус санки або екшину,
+  },
 });
 
 export const phoneBookReducer = phoneBookSlice.reducer;

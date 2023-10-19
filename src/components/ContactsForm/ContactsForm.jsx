@@ -1,57 +1,66 @@
-import React, { useState } from 'react';
 import { nanoid } from 'nanoid';
-import './ContactsForm.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { requestAddContactThunk } from 'redux/thunks';
+import { selectContacts } from 'redux/selectors';
+import { Button, Container, Input, Label } from './ContactForm.styled';
 
-export function ContactsForm(props) {
-  const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+const ContactsForm = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectContacts);
 
-  const handleChange = event => {
-    const { name, value } = event.target;
-    if (name === 'name') {
-      setName(value);
-    } else if (name === 'phone') {
-      setPhone(value);
+  const formatPhoneNumber = event => {
+    const input = event.target;
+    let value = input.value.replace(/\D/g, '');
+
+    if (value.length > 6) {
+      value = value.replace(/(\d{3})(\d{2})(\d{2})/, '$1-$2-$3');
     }
+
+    input.value = value;
   };
 
   const handleSubmit = event => {
     event.preventDefault();
 
-    props.onSubmit({ name, phone });
-    setName('');
-    setPhone('');
+    const name = event.currentTarget.elements.name.value;
+    const number = event.currentTarget.elements.number.value;
+
+    if (
+      contacts.some(
+        contact => contact.name === name && contact.number === number
+      )
+    ) {
+      alert(`"${name}" is already in contacts!`);
+    } else {
+      dispatch(requestAddContactThunk({ name, number }));
+      event.currentTarget.reset();
+    }
   };
 
   return (
-    <div className="contact-wrapper">
+    <Container>
       <form onSubmit={handleSubmit}>
-        <label className="title">Name</label>
-        <input
-          className="form-control mb-3"
+        <h2>Contacts</h2>
+        <Label>Name:</Label>
+        <Input
           type="text"
           name="name"
           required
           id={nanoid()}
           placeholder="Ivan"
-          value={name}
-          onChange={handleChange}
         />
-        <label className="title">phone</label>
-        <input
-          className="form-control mb-3"
-          type="phone"
-          name="phone"
+        <Label>Number:</Label>
+        <Input
+          type="tel"
+          name="number"
           required
           placeholder="000-00-00"
-          value={phone}
-          onChange={handleChange}
+          onInput={formatPhoneNumber}
         />
-        <button className="addContactBtn" type="submit">
-          Add contact
-        </button>
+        <Button type="submit">Add contact</Button>
       </form>
-    </div>
+    </Container>
   );
-}
+};
+
+export default ContactsForm;

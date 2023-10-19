@@ -1,17 +1,21 @@
 import React from 'react';
-import './Filter.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectFilter } from 'redux/selectors';
+import { onFilterChange } from 'redux/phoneBookReducer';
+import { Input, Paragraph, Title } from './Filter.styled';
 
-export const Filter = ({ type, value, onChange }) => {
+export const Filter = ({ type }) => {
+  const filter = useSelector(selectFilter);
+  const dispatch = useDispatch();
+  const onFilter = event => {
+    const inputValue = event.target.value;
+    dispatch(onFilterChange(inputValue));
+  };
   return (
     <div>
-      <h2 className="filterTitle">Contacts</h2>
-      <p className="filterText">Find contact by name</p>
-      <input
-        className="form-control filterInput"
-        type={type}
-        value={value}
-        onChange={onChange}
-      ></input>
+      <Title>Contacts</Title>
+      <Paragraph>Find contact by name</Paragraph>
+      <Input type={type} value={filter} onChange={onFilter}></Input>
     </div>
   );
 };
