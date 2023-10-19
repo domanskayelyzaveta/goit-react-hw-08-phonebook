@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import styles from './login.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginThunk } from 'redux/thunks';
 import { selectUserData } from 'redux/selectors';
 import { useNavigate } from 'react-router-dom';
+import { Container, Input } from './Login.styled';
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -28,33 +28,31 @@ const Login = () => {
 
   return (
     <div>
-      <div className={styles.myContactsContainer}>
-        <h2 className={styles.loginTitle}>Login form</h2>
-        <form onSubmit={handleSubmit} className={styles.myLoginInputsWrapper}>
+      <Container>
+        <h2>Login form</h2>
+        <form onSubmit={handleSubmit}>
           <label>
             Email:
-            <input
+            <Input
               required
               type="email"
               name="userEmail"
               placeholder="across@mail.com"
-              className={styles.myLoginInputs}
             />
           </label>
           <label>
             Password:
-            <input
+            <Input
               required
               type="password"
               name="userPassword"
               placeholder="examplepwd12345"
               minLength={8}
-              className={styles.myLoginInputs}
             />
           </label>
           <button type="submit">Login</button>
         </form>
-      </div>
+      </Container>
     </div>
   );
 };

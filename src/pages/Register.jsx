@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
-import styles from './register.module.css';
 import { registerThunk } from 'redux/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectUserData } from 'redux/selectors';
+import { Container, Input } from './Register.styled';
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -31,43 +31,40 @@ const Register = () => {
   };
 
   return (
-    <div className={styles.registerFormContainer}>
-      <h2 className={styles.registerFormTitle}>Register form</h2>
-      <form onSubmit={handleSubmit} className={styles.myFormInputsWrapper}>
+    <Container>
+      <h2>Register form</h2>
+      <form onSubmit={handleSubmit}>
         <label>
           Name:
-          <input
+          <Input
             required
             type="text"
             name="userName"
             placeholder="Adrian Cross"
-            className={styles.myFormInput}
           />
         </label>
         <label>
           Email:
-          <input
+          <Input
             required
             type="email"
             name="userEmail"
             placeholder="across@mail.com"
-            className={styles.myFormInput}
           />
         </label>
         <label>
           Password:
-          <input
+          <Input
             required
             type="password"
             name="userPassword"
             placeholder="examplepwd12345"
             minLength={8}
-            className={styles.myFormInput}
           />
         </label>
         <button type="submit">Sign up</button>
       </form>
-    </div>
+    </Container>
   );
 };
 

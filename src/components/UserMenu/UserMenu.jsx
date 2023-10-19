@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { selectUserData } from 'redux/selectors';
 import { logoutThunk } from 'redux/thunks';
+import { Button } from './UserMenu.styled';
 
 function UserMenu() {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ function UserMenu() {
     <div>
       <h2>Contacts</h2>
       <p>Hello {userData?.email}!</p>
-      <button onClick={handleLogOut}>Log out</button>
+      <Button onClick={handleLogOut}>Log out</Button>
     </div>
   );
 }

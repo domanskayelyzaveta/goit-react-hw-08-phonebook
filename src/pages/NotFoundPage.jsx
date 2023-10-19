@@ -1,5 +1,7 @@
+import { Container } from './NotFoundPage.styled';
+
 const NotFoundPage = () => {
-  return <div>NotFoundPage</div>;
+  return <Container>NotFoundPage</Container>;
 };
 
 export default NotFoundPage;

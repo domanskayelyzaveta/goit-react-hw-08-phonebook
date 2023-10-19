@@ -3,25 +3,26 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { selectToken } from 'redux/selectors';
-import styles from '../Layout/navbar.module.css';
+import styles from './Navigation.module.css';
+import { List, ListEl } from './Navigation.styled';
 
 const Navigation = () => {
   const token = useSelector(selectToken);
   return token ? (
     <UserMenu />
   ) : (
-    <ul className={styles.myNavbar}>
-      <li className={styles.myNavLink}>
-        <NavLink className={styles.myLogin} to="/login">
+    <List>
+      <ListEl>
+        <NavLink className={styles.myNavLink} to="/login">
           Login
         </NavLink>
-      </li>
-      <li className={styles.myNavLink}>
-        <NavLink className={styles.myRegister} to="/register">
+      </ListEl>
+      <ListEl>
+        <NavLink className={styles.myNavLink} to="/register">
           Register
         </NavLink>
-      </li>
-    </ul>
+      </ListEl>
+    </List>
   );
 };
 
