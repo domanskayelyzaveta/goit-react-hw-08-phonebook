@@ -1,7 +1,11 @@
 import { Container } from './NotFoundPage.styled';
 
 const NotFoundPage = () => {
-  return <Container>NotFoundPage</Container>;
+  return (
+    <Container className="not-found-page-pic">
+      <p>NotFoundPage</p>
+    </Container>
+  );
 };
 
 export default NotFoundPage;
