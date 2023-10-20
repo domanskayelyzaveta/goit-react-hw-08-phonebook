@@ -1,12 +1,19 @@
 import styled from '@emotion/styled';
 
-export const Button = styled.button`
-  height: 18px;
-  width: 60px;
-  font-size: 10px;
-  border-radius: 4px;
-  margin-left: 10px;
-  background-color: rgb(241, 173, 217);
-  border: 1px solid grey;
-  color: rgb(74, 74, 74);
+export const Container = styled.div`
+  width: fit-content;
+  background-color: rgba(255, 255, 255, 0.5);
+`;
+
+export const List = styled.li`
+  font-size: 20px;
+  flex: 1;
+  padding-left: 20px;
+  padding-right: 40px;
+`;
+
+export const ListWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 8px;
 `;

@@ -12,24 +12,11 @@ import { requestPhoneBookThunk } from 'redux/thunks';
 const Contacts = () => {
   const dispatch = useDispatch();
   const userData = useSelector(selectUserData);
-  // const contacts = useSelector(selectContacts);
-  // const filter = useSelector(selectFilter);
 
   useEffect(() => {
     if (!userData) return;
     dispatch(requestPhoneBookThunk());
   }, [dispatch, userData]);
-
-  // const handleFormSubmit = ({ name, phone }) => {
-  //   const hasDuplicateContacts = contacts.some(
-  //     contact => contact.name === name && contact.phone === phone
-  //   );
-  //   if (hasDuplicateContacts) {
-  //     alert(`"${name}" is already in contacts!`);
-  //     return;
-  //   }
-  //   dispatch(requestAddContactThunk({ name, phone }));
-  // };
 
   return (
     <div>

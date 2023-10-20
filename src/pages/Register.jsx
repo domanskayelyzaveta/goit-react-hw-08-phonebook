@@ -3,21 +3,23 @@ import { registerThunk } from 'redux/thunks';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { selectUserData } from 'redux/selectors';
-import { Container, Input } from './Register.styled';
+import { Container, Title } from './Register.styled';
+import { Button, TextField } from '@mui/material';
+import styles from './Register.module.css';
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const userData = useSelector(selectUserData);
 
-  ///перезапис сторінки реєстр. і перенаправлення на стор.контактів,
-  //немає можливості зробити крок назад
+  // /перезапис сторінки реєстр. і перенаправлення на стор.контактів,
+  // немає можливості зробити крок назад
   useEffect(() => {
     if (!userData) return;
     navigate('/contacts', { replace: true });
   }, [userData, navigate]);
 
-  ////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -32,37 +34,47 @@ const Register = () => {
 
   return (
     <Container>
-      <h2>Register form</h2>
+      <Title>Register form</Title>
       <form onSubmit={handleSubmit}>
-        <label>
-          Name:
-          <Input
+        <div>
+          <TextField
             required
             type="text"
             name="userName"
+            label="Name:"
+            color="success"
             placeholder="Adrian Cross"
+            className={styles.myRegisterInput}
           />
-        </label>
-        <label>
-          Email:
-          <Input
+          <TextField
             required
             type="email"
+            label=" Email:"
+            color="success"
             name="userEmail"
             placeholder="across@mail.com"
+            className={styles.myRegisterInput}
           />
-        </label>
-        <label>
-          Password:
-          <Input
+          <TextField
             required
+            minLength={8}
+            color="success"
             type="password"
+            label="Password:"
             name="userPassword"
             placeholder="examplepwd12345"
-            minLength={8}
+            className={styles.myRegisterInput}
           />
-        </label>
-        <button type="submit">Sign up</button>
+
+          <Button
+            type="submit"
+            variant="outlined"
+            color="secondary"
+            className={styles.myRegisterBtn}
+          >
+            Sign up
+          </Button>
+        </div>
       </form>
     </Container>
   );

@@ -3,7 +3,10 @@ import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilterContacts } from 'redux/selectors';
 import { requestDeleteContactThunk } from 'redux/thunks';
-import { Button } from './ContactList.styled';
+// import { Button } from './ContactList.styled';
+import { Container, List, ListWrapper } from './ContactList.styled';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 export const ContactList = () => {
   const contacts = useSelector(selectFilterContacts);
@@ -13,22 +16,29 @@ export const ContactList = () => {
     dispatch(requestDeleteContactThunk(id));
   };
   return (
-    <div>
+    <Container>
       <ul>
         {contacts.map(({ id, name, number }) => (
-          <li key={nanoid()}>
-            {name} : {number}
-            <Button
-              id={nanoid(id)}
-              className="contactListBtn"
-              type="button"
-              onClick={() => onDelete(id)}
-            >
-              Delete
-            </Button>
-          </li>
+          <ListWrapper>
+            <div>
+              <IconButton
+                id={nanoid(id)}
+                size="small"
+                onClick={() => onDelete(id)}
+                aria-label="delete"
+                style={{ color: `#a04f6d` }}
+              >
+                <DeleteIcon />
+              </IconButton>
+            </div>
+            <div>
+              <List key={nanoid()}>
+                {name} : {number}
+              </List>
+            </div>
+          </ListWrapper>
         ))}
       </ul>
-    </div>
+    </Container>
   );
 };

@@ -2,7 +2,17 @@ import { nanoid } from 'nanoid';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestAddContactThunk } from 'redux/thunks';
 import { selectContacts } from 'redux/selectors';
-import { Button, Container, Input, Label } from './ContactForm.styled';
+import {
+  ContactForm,
+  Container,
+  Input,
+  InputContainer,
+  InputWrapper,
+  Label,
+  TitleForm,
+} from './ContactForm.styled';
+import { Button } from '@mui/material';
+import styles from './ContactForm.module.css';
 
 const ContactsForm = () => {
   const dispatch = useDispatch();
@@ -39,26 +49,39 @@ const ContactsForm = () => {
 
   return (
     <Container>
-      <form onSubmit={handleSubmit}>
-        <h2>Contacts</h2>
-        <Label>Name:</Label>
-        <Input
-          type="text"
-          name="name"
-          required
-          id={nanoid()}
-          placeholder="Ivan"
-        />
-        <Label>Number:</Label>
-        <Input
-          type="tel"
-          name="number"
-          required
-          placeholder="000-00-00"
-          onInput={formatPhoneNumber}
-        />
-        <Button type="submit">Add contact</Button>
-      </form>
+      <ContactForm onSubmit={handleSubmit}>
+        <TitleForm>Contacts</TitleForm>
+        <InputWrapper>
+          <InputContainer>
+            <Label>Name</Label>
+            <Input
+              type="text"
+              name="name"
+              required
+              id={nanoid()}
+              placeholder="Ivan"
+            />
+          </InputContainer>
+          <InputContainer>
+            <Label>Number</Label>
+            <Input
+              type="tel"
+              name="number"
+              required
+              placeholder="000-00-00"
+              onInput={formatPhoneNumber}
+            />
+          </InputContainer>
+          <Button
+            variant="outlined"
+            type="submit"
+            color="secondary"
+            className={styles.myAddContactBtn}
+          >
+            Add contact
+          </Button>
+        </InputWrapper>
+      </ContactForm>
     </Container>
   );
 };

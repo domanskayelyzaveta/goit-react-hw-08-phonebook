@@ -1,9 +1,6 @@
 import styled from '@emotion/styled';
 
-export const Container = styled.div`
-  padding-left: 40px;
-`;
-
-export const Input = styled.input`
-  margin-right: 10px;
+export const LoginForm = styled.form`
+  width: 800px;
+  margin: 0 auto;
 `;
