@@ -1,11 +1,7 @@
-import { Container } from './NotFoundPage.styled';
+import styles from './NotFoundPage.module.css';
 
 const NotFoundPage = () => {
-  return (
-    <Container className="not-found-page-pic">
-      <p>NotFoundPage</p>
-    </Container>
-  );
+  return <div className={styles.notFoundPage}></div>;
 };
 
 export default NotFoundPage;
